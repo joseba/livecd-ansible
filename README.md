@@ -1,4 +1,4 @@
-Building Custom CentOS 6.4 LiveCD With Ansible
+Building Custom CentOS 6.X LiveCD With Ansible
 ==============================================
 
 ## Requirements:
