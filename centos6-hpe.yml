@@ -1,0 +1,40 @@
+- hosts: post
+  connection: chroot
+  sudo: false
+  gather_facts: false
+
+  vars:
+    cdlabel: centos6-hpe
+    hostname: centos6-hpe
+    livecd_user: centos
+    root_password: hpe
+
+    # Variables below not used directly in playbook. Used by generate_config.py to create basic kickstart file.
+
+    lang: en_US.UTF-8
+    keyboard: es
+    timezone: Europe/Madrid
+    partition_size: 4096
+
+    repos_list:
+      - { name: 'a-base', baseurl: 'http://mirror.isoc.org.il/pub/centos/6.7/os/$basearch' }
+      - { name: 'a-updates', baseurl: 'http://mirror.isoc.org.il/pub/centos/6.7/updates/$basearch' }
+      - { name: 'hpe-stk', baseurl: 'http://downloads.linux.hpe.com/repo/stk/rhel/6.7/x86_64/current' }
+      - { name: 'hpe-mcp', baseurl: 'http://downloads.linux.hpe.com/repo/mcp/centos/6.7/x86_64/current' }
+
+    # End of variable block used by generate_config.py
+
+  roles:
+    - livecd-pre-common
+    - disable-selinux
+    - livecd-pxe-common
+    - livecd-post-common
+
+
+- hosts: post-nochroot
+  connection: local
+  sudo: false
+  gather_facts: false
+
+  roles:
+    - livecd-isolinux-common

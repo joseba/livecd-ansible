@@ -1,0 +1,4 @@
+- name: Disable SELINUX 
+  copy: src=etc_selinux_config dest=/etc/selinux/config
+  tags:
+    - host_setup_livecd
